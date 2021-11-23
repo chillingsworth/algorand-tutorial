@@ -3,3 +3,6 @@ load-env:
         include .env
         export
     endif
+
+build:
+	@reach compile;
