@@ -10,12 +10,8 @@ export const main = Reach.App(() => {
     ...Player,
   });
   const Bob   = Participant('Bob', {
-<<<<<<< HEAD
     ...Player,
     acceptWager: Fun([UInt], Null),
-=======
-   ...Player,
->>>>>>> parent of fa4d362... Section 2.4 attempt, but not working. Going to copy code from tutorial and do diff to check reason for failure
   });
   deploy();
 

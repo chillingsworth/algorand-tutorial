@@ -44,9 +44,3 @@ const stdlib = loadStdlib(process.env);
   console.log(`Bob went from ${beforeBob} to ${afterBob}.`);
 
 })();
-=======
-    }),
-  ]);
-
-})(); // <-- Don't forget these!
->>>>>>> parent of fa4d362... Section 2.4 attempt, but not working. Going to copy code from tutorial and do diff to check reason for failure
