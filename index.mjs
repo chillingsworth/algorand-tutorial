@@ -30,7 +30,6 @@ const stdlib = loadStdlib(process.env);
     }),
     backend.Bob(ctcBob, {
       ...Player('Bob'),
-<<<<<<< HEAD
       acceptWager: (amt) => {
         console.log(`Bob accepts the wager of ${fmt(amt)}.`);
       },
