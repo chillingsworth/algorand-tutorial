@@ -8,36 +8,29 @@ const Player = {
 export const main = Reach.App(() => {
   const Alice = Participant('Alice', {
     ...Player,
-    wager: UInt,
   });
   const Bob   = Participant('Bob', {
+<<<<<<< HEAD
     ...Player,
     acceptWager: Fun([UInt], Null),
+=======
+   ...Player,
+>>>>>>> parent of fa4d362... Section 2.4 attempt, but not working. Going to copy code from tutorial and do diff to check reason for failure
   });
   deploy();
 
   Alice.only(() => {
-    const wager = declassify(interact.wager);
     const handAlice = declassify(interact.getHand());
   });
-  Alice.publish(wager, handAlice)
-    .pay(wager);
+  Alice.publish(handAlice);
   commit();
 
   Bob.only(() => {
-    interact.acceptWager(wager);
     const handBob = declassify(interact.getHand());
   });
-  Bob.publish(handBob)
-    .pay(wager);
+  Bob.publish(handBob);
 
   const outcome = (handAlice + (4 - handBob)) % 3;
-  const            [forAlice, forBob] =
-    outcome == 2 ? [       2,      0] :
-    outcome == 0 ? [       0,      2] :
-    /* tie      */ [       1,      1];
-  transfer(forAlice * wager).to(Alice);
-  transfer(forBob   * wager).to(Bob);
   commit();
 
   each([Alice, Bob], () => {
