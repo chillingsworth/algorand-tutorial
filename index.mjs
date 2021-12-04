@@ -12,12 +12,13 @@ const stdlib = loadStdlib(process.env);
   const beforeAlice = await getBalance(accAlice);
   const beforeBob = await getBalance(accBob);
 
-  const ctcAlice = accAlice.deploy(backend);
-  const ctcBob = accBob.attach(backend, ctcAlice.getInfo());
+  const ctcAlice = accAlice.contract(backend);
+  const ctcBob = accBob.contract(backend, ctcAlice.getInfo());
 
   const HAND = ['Rock', 'Paper', 'Scissors'];
   const OUTCOME = ['Bob wins', 'Draw', 'Alice wins'];
   const Player = (Who) => ({
+    ...stdlib.hasRandom, // <--- new!
     getHand: () => {
       const hand = Math.floor(Math.random() * 3);
       console.log(`${Who} played ${HAND[hand]}`);
@@ -29,15 +30,15 @@ const stdlib = loadStdlib(process.env);
   });
 
   await Promise.all([
-    backend.Alice(ctcAlice, {
+    ctcAlice.p.Alice({
       ...Player('Alice'),
       wager: stdlib.parseCurrency(5),
     }),
-    backend.Bob(ctcBob, {
+    ctcBob.p.Bob({
       ...Player('Bob'),
       acceptWager: (amt) => {
         console.log(`Bob accepts the wager of ${fmt(amt)}.`);
-      }
+      },
     }),
   ]);
 
@@ -47,4 +48,4 @@ const stdlib = loadStdlib(process.env);
   console.log(`Alice went from ${beforeAlice} to ${afterAlice}.`);
   console.log(`Bob went from ${beforeBob} to ${afterBob}.`);
 
-})(); // <-- Don't forget these!
+})();
